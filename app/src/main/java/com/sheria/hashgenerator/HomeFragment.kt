@@ -3,6 +3,7 @@ package com.sheria.hashgenerator
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -59,8 +60,7 @@ class HomeFragment : Fragment() {
                 showSnackBar("Field Empty")
             } else {
                 applyAnimations()
-                getHashData()
-                navigateToSuccess()
+                navigateToSuccess(getHashData())
             }
 
         }
@@ -97,8 +97,11 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun navigateToSuccess() {
-        findNavController().navigate(R.id.action_homeFragment_to_successFragment)
+    private fun navigateToSuccess(hash:String) {
+
+       val directions=HomeFragmentDirections.actionHomeFragmentToSuccessFragment(hash)
+        findNavController().navigate(directions)
+
 
     }
 
@@ -109,6 +112,7 @@ class HomeFragment : Fragment() {
             Snackbar.LENGTH_SHORT
         )
         snackBar.setAction("Okay") {}
+        snackBar.setActionTextColor(ContextCompat.getColor(requireContext(),R.color.blue))
         snackBar.show()
     }
 
